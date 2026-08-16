@@ -1,0 +1,16 @@
+# Системные файлы
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Редакторы
+.vscode/
+.idea/
+*.swp
+
+# Временные и рабочие файлы
+*.log
+*.tmp
+_*.html
+_*.js
+_*.png
