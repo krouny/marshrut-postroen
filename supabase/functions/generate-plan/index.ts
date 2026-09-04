@@ -3,6 +3,11 @@
 // поездки (реальные названия ресторанов/мест, честный совет по логистике) —
 // вместо шаблонного генератора на клиенте (см. buildPlan() в index.html).
 //
+// АГЕНТНЫЙ РЕЖИМ: модели даётся инструмент веб-поиска (серверный tool от Anthropic).
+// Она сама решает, что и сколько раз погуглить (актуальные места, паромы/дороги,
+// сезонность), прежде чем собрать итоговый план — а не просто вспоминает по памяти.
+// Это дороже и медленнее одиночного вызова, зато меньше шанс устаревших/выдуманных мест.
+//
 // Ключ ANTHROPIC_API_KEY хранится ТОЛЬКО здесь, на сервере — в браузер не попадает.
 //
 // Деплой:
@@ -29,11 +34,19 @@ function jsonResponse(body: unknown, status = 200) {
   });
 }
 
+// Серверный инструмент веб-поиска Anthropic — выполняется на их стороне,
+// не нужно самим ходить в поисковик и присылать результаты обратно.
+const WEB_SEARCH_TOOL = {
+  type: "web_search_20250305",
+  name: "web_search",
+  max_uses: 8,
+};
+
 // Схема плана — та же форма, что уже понимает renderPlan() на клиенте,
 // чтобы не переписывать вёрстку под новый формат.
 const PLAN_TOOL = {
   name: "return_travel_plan",
-  description: "Вернуть собранный план поездки в строгом формате",
+  description: "Вернуть уже готовый, проверенный план поездки в строгом формате. Вызывать только после того, как нужные места и логистика проверены поиском.",
   input_schema: {
     type: "object",
     required: ["intro", "typeLabel", "stayText", "days"],
@@ -156,42 +169,76 @@ Deno.serve(async (req: Request) => {
 ${groundingLines.join("\n")}
 
 Требования к плану:
-1. Будь МАКСИМАЛЬНО конкретен — если ты действительно знаешь реальные рестораны, пляжи, экскурсии,
-   локальные особенности этого места — называй их. Если не уверен в существовании конкретного места —
-   не выдумывай название, опиши тип места честно ("рыбный ресторан у гавани") без вымышленного бренда.
-2. Дай честный логистический совет: стоит ли брать машину, есть ли смысл выезжать в соседние города
-   (используй проверенные расстояния выше, если они даны), что лучше не делать (например «в этот пляж
-   лучше не ехать в выходные — не будет свободных мест на парковке»).
+1. Прежде чем писать конкретные названия (рестораны, пляжи, экскурсии, конкретные маршруты) —
+   ПРОВЕРЬ их через веб-поиск: они должны реально существовать и по возможности всё ещё работать.
+   Если после поиска не уверен в конкретном месте — опиши тип места честно ("рыбный ресторан у гавани")
+   без вымышленного бренда, лучше честно, чем красиво и неточно.
+2. Поищи и честно учти логистику: стоит ли брать машину, есть ли смысл выезжать в соседние города
+   (используй проверенные расстояния выше, если они даны), паромы/сезонные ограничения/ремонты дорог,
+   что лучше не делать (например «в этот пляж лучше не ехать в выходные — не будет мест на парковке»).
 3. Учитывай состав группы (дети, пара, компания) в выборе активностей.
 4. Первый день — обычно прилёт/заселение, последний — сборы/отъезд, без насыщенной программы.
 5. Пиши по-русски, тепло и по-человечески, как заботливый друг, а не как рекламный буклет.
-6. Не обещай бронирование или цены, которых ты не можешь знать точно — только реальные рекомендации.`;
+6. Не обещай бронирование или цены, которых ты не можешь знать точно — только реальные рекомендации.
+7. Когда исследование закончено — вызови return_travel_plan с готовым планом. Пока не уверен, что
+   проверил ключевые места и логистику через поиск — не вызывай его.`;
 
-  try {
-    const aiRes = await fetch("https://api.anthropic.com/v1/messages", {
+  // Общий вызов Anthropic Messages API
+  async function callClaude(messages: any[], tools: any[], toolChoice?: any) {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-api-key": ANTHROPIC_API_KEY,
+        "x-api-key": ANTHROPIC_API_KEY!,
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-5",
-        max_tokens: 4096,
-        tools: [PLAN_TOOL],
-        tool_choice: { type: "tool", name: "return_travel_plan" },
-        messages: [{ role: "user", content: prompt }],
+        max_tokens: 8192,
+        tools,
+        ...(toolChoice ? { tool_choice: toolChoice } : {}),
+        messages,
       }),
     });
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("Anthropic API error:", res.status, errText);
+      throw new Error("ai_error_" + res.status);
+    }
+    return res.json();
+  }
 
-    if (!aiRes.ok) {
-      const errText = await aiRes.text();
-      console.error("Anthropic API error:", aiRes.status, errText);
-      return jsonResponse({ error: "ai_error", status: aiRes.status }, 502);
+  try {
+    // Шаг 1: даём модели волю искать в интернете (auto — иначе форс конкретного
+    // tool заблокировал бы возможность сначала погуглить). Модель может сделать
+    // несколько поисков подряд — это всё разворачивается на стороне Anthropic.
+    let messages: any[] = [{ role: "user", content: prompt }];
+    let aiData = await callClaude(messages, [WEB_SEARCH_TOOL, PLAN_TOOL]);
+
+    // pause_turn — сервер просит продолжить тот же ход (долгая цепочка поисков),
+    // просто отправляем его же ответ обратно без нового пользовательского сообщения
+    let guard = 0;
+    while (aiData.stop_reason === "pause_turn" && guard < 5) {
+      messages = [...messages, { role: "assistant", content: aiData.content }];
+      aiData = await callClaude(messages, [WEB_SEARCH_TOOL, PLAN_TOOL]);
+      guard++;
     }
 
-    const aiData = await aiRes.json();
-    const toolUse = (aiData.content || []).find((c: any) => c.type === "tool_use");
+    let toolUse = (aiData.content || []).find((c: any) => c.type === "tool_use" && c.name === "return_travel_plan");
+
+    // Модель могла закончить исследование текстом, не вызвав финальный tool —
+    // просим явно оформить результат, на этот раз форсируя нужный tool
+    // (форсировать безопасно: поиск уже проведён в предыдущих ходах).
+    if (!toolUse) {
+      messages = [
+        ...messages,
+        { role: "assistant", content: aiData.content },
+        { role: "user", content: "Заверши задачу: оформи итоговый план строго вызовом return_travel_plan, используя всё, что нашёл выше." },
+      ];
+      aiData = await callClaude(messages, [PLAN_TOOL], { type: "tool", name: "return_travel_plan" });
+      toolUse = (aiData.content || []).find((c: any) => c.type === "tool_use" && c.name === "return_travel_plan");
+    }
+
     if (!toolUse) return jsonResponse({ error: "no_structured_output" }, 502);
 
     const plan = toolUse.input;

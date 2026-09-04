@@ -4447,7 +4447,9 @@ function plGenerate(fixNote){
       budget:o.budget,budgetSum:o.budgetSum,interests:o.interests,notes:o.notes,startDate:o.startDate,
       nearbySettlements:(info.drive||[]).map(function(d){return {name:d.name,km:d.km,min:d.min}})
     };
-    withTimeout(sb.functions.invoke('generate-plan',{body:payload}),20000,null).then(function(res){
+    // Таймаут увеличен: агент теперь реально ищет в интернете (несколько раундов
+    // поиска перед ответом) — это дольше одиночного вызова модели
+    withTimeout(sb.functions.invoke('generate-plan',{body:payload}),45000,null).then(function(res){
       if(res&&!res.error&&res.data&&res.data.plan){
         plLastPlan=assembleAiPlan(res.data.plan,nearby);
         renderPlan(plLastPlan);
