@@ -233,6 +233,21 @@ body>nav{
 .pl-hero h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;margin-bottom:8px}
 .pl-hero h2 em{font-style:italic;color:var(--gold)}
 .pl-hero p{font-size:13.5px;color:var(--t2);line-height:1.7;max-width:500px;margin:0 auto}
+.pl-capture{background:var(--s1);border:.5px solid var(--b2);border-radius:16px;
+  padding:16px 18px;margin-bottom:18px;box-shadow:0 8px 22px rgba(20,50,55,.05)}
+.pl-capture-status{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--gd);font-family:'Montserrat',sans-serif;margin-bottom:8px}
+.pl-capture-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;
+  animation:captureDotPulse 2s infinite}
+@keyframes captureDotPulse{0%{box-shadow:0 0 0 0 rgba(14,158,143,.55)}70%{box-shadow:0 0 0 8px rgba(14,158,143,0)}100%{box-shadow:0 0 0 0 rgba(14,158,143,0)}}
+.pl-capture-d{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:12px}
+.pl-capture-row{display:flex;gap:8px;flex-wrap:wrap}
+.pl-capture-input{flex:1;min-width:200px;font-family:'JetBrains Mono','Courier New',monospace;font-size:12px}
+.pl-capture-input::placeholder{color:var(--t3);opacity:.8}
+.pl-capture-go{display:flex;align-items:center;gap:7px;padding:11px 18px;border-radius:11px;
+  border:none;cursor:pointer;background:var(--gold);color:#fff;font-family:'Montserrat',sans-serif;
+  font-size:12px;font-weight:600;white-space:nowrap;transition:background .3s,transform .2s}
+.pl-capture-go:hover{background:var(--gl);transform:translateY(-1px)}
 .pl-form{background:var(--s1);border:.5px solid var(--b1);border-radius:20px;padding:22px;
   box-shadow:0 10px 30px rgba(20,50,55,.06)}
 .pl-field{margin-bottom:15px}
@@ -274,12 +289,15 @@ body>nav{
 .pl-plan-title em{font-style:italic;color:var(--gold)}
 .pl-plan-meta{font-size:11.5px;color:var(--t3)}
 .pl-plan-intro{padding:16px 20px;font-size:13.5px;line-height:1.7;color:var(--t2);border-bottom:.5px solid var(--b1)}
+.pl-fx-hint{padding:0 20px 16px;margin-top:-6px;font-size:11.5px;color:var(--gold);border-bottom:.5px solid var(--b1)}
+.pl-fx-hint i{margin-right:5px}
 .pl-day{padding:15px 20px;border-bottom:.5px solid var(--b1)}
 .pl-day:last-of-type{border-bottom:none}
 .pl-day-h{display:flex;align-items:center;gap:10px;margin-bottom:9px}
 .pl-day-num{width:30px;height:30px;border-radius:9px;background:rgba(14,158,143,.12);color:var(--gold);
   display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
 .pl-day-t{font-size:13.5px;font-weight:600}
+.pl-day-date{color:var(--gold);font-weight:700}
 .pl-day-items{display:flex;flex-direction:column;gap:7px;padding-left:40px}
 .pl-item{display:flex;gap:9px;font-size:12.5px;color:var(--t2);line-height:1.5}
 .pl-item b{color:var(--t1);font-weight:600}
@@ -288,6 +306,8 @@ body>nav{
   border:.5px solid var(--b1)}
 .pl-stay-t{font-size:12.5px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:7px;margin-bottom:5px}
 .pl-stay-d{font-size:13px;color:var(--t1);line-height:1.6;margin-bottom:8px}
+.pl-drive-row{font-size:12.5px;color:var(--t1);line-height:1.9}
+.pl-drive-note{font-size:10.5px;color:var(--t3);margin-top:6px;line-height:1.5}
 .pl-link{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
   color:var(--gold);text-decoration:none;background:rgba(14,158,143,.1);padding:5px 11px;
   border-radius:14px;transition:background .36s;white-space:nowrap}
@@ -1044,6 +1064,8 @@ body.ac-open .lb-home,body.ac-open .intent-wrap{opacity:0;visibility:hidden;tran
 .tv-item-del:hover{color:var(--red)}
 .ti-thumb{display:block;margin-top:7px;max-width:100%;width:170px;max-height:150px;object-fit:cover;
   border-radius:9px;border:.5px solid var(--b1);background:var(--bg3)}
+.ti-details{margin-top:7px;font-size:11.5px;color:var(--t2);line-height:1.6;white-space:pre-line;
+  max-height:160px;overflow-y:auto;padding-right:4px}
 .mini-btn.ghost{background:transparent;color:var(--gold);border:.5px solid var(--b2)}
 .mini-btn.ghost:hover{background:rgba(14,158,143,.1)}
 /* Чат */
@@ -1286,7 +1308,7 @@ footer em{color:var(--gold);font-style:normal}
   <section class="hero">
     <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
     <div class="hbadge"><i class="fas fa-heart"></i> Сис &amp; Сис · Путешествия с душой</div>
-    <h1>Введи город —<br><em>получи лучшие</em></h1>
+    <h1>Plan less. Live more.<br><em>Travel always.</em></h1>
     <p>Booking, Яндекс, Aviasales, Tripster — один поиск, всё в одном месте. Без лишних вкладок.</p>
     <div class="so">
       <div class="sr">
@@ -1346,6 +1368,14 @@ footer em{color:var(--gold);font-style:normal}
       <h2>Расскажите о поездке — <em>соберу план по дням</em></h2>
       <p>Ответьте на несколько вопросов, и я подберу отдых под вас: где жить, что делать и куда сходить каждый день.</p>
     </div>
+    <div class="pl-capture">
+      <div class="pl-capture-status"><span class="pl-capture-dot"></span> Готов принять ссылку на рилс/тикток</div>
+      <p class="pl-capture-d">Скинули места в закладки из Instagram/TikTok и не знаете, что с ними делать? Вставьте ссылку — мы вручную соберём из неё маршрут (пока без автоматизации, отвечаем лично).</p>
+      <div class="pl-capture-row">
+        <input id="pl-reel-link" class="fc pl-capture-input" placeholder="вставьте_ссылку_сюда://instagram.com/reel/..." autocomplete="off">
+        <button class="pl-capture-go" onclick="plSendReel()"><i class="fab fa-telegram"></i> Отправить</button>
+      </div>
+    </div>
     <div class="pl-form" id="pl-form">
       <div class="pl-field">
         <label>Куда едете?</label>
@@ -1369,13 +1399,17 @@ footer em{color:var(--gold);font-style:normal}
       </div>
       <div class="pl-row2">
         <div class="pl-field">
+          <label>Дата начала <span>(необязательно)</span></label>
+          <input id="pl-start" class="fc" type="date">
+        </div>
+        <div class="pl-field">
           <label>На сколько дней?</label>
           <input id="pl-days" class="fc" type="number" value="5" min="1" max="21">
         </div>
-        <div class="pl-field">
-          <label>Ваш бюджет, ₽ <span>(укажите сами)</span></label>
-          <input id="pl-budget" class="fc" type="number" min="0" step="1000" placeholder="Например, 60000">
-        </div>
+      </div>
+      <div class="pl-field">
+        <label>Ваш бюджет, ₽ <span>(укажите сами)</span></label>
+        <input id="pl-budget" class="fc" type="number" min="0" step="1000" placeholder="Например, 60000">
       </div>
       <div class="pl-field">
         <label>Или выберите уровень <span>(подставит примерную сумму)</span></label>
@@ -1936,6 +1970,16 @@ footer em{color:var(--gold);font-style:normal}
   </div>
 </div>
 
+<!-- ══ ПРИКРЕПИТЬ ПЛАН К СОВМЕСТНОЙ ПОЕЗДКЕ ══ -->
+<div class="mov" id="attach-m" onclick="if(event.target===this)closeAttach()">
+  <div class="mb">
+    <button class="mc" onclick="closeAttach()"><i class="fas fa-times"></i></button>
+    <div class="mt">Прикрепить план к поездке</div>
+    <div class="ms">Попутчики, добавленные в поездку, увидят план прямо там — не как текст в чужом чате, а внутри общего пространства поездки.</div>
+    <div id="attach-list"></div>
+  </div>
+</div>
+
 <!-- ══ ОБЩИЙ ЧАТ ══ -->
 <div id="gc" class="gc">
   <button class="gc-tab" onclick="gcToggle()" aria-label="Общий чат">
@@ -1979,7 +2023,7 @@ footer em{color:var(--gold);font-style:normal}
   </div>
 </div>
 
-<footer>© 2026 <em>Маршрут Построен</em> · Сис &amp; Сис · Путешествия с душой · <span style="cursor:pointer;color:var(--gold)" onclick="P('support')">Поддержка</span></footer>
+<footer>© 2026 <em>Маршрут Построен</em> · Сис &amp; Сис · Путешествия с душой · <span style="cursor:pointer;color:var(--gold)" onclick="P('support')">Поддержка</span> · <a href="https://t.me/markizy_travel_tgk" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;border-bottom:.5px dotted var(--t3)">Telegram-канал</a></footer>
 
 <script>
 // ═══════════════════════════
@@ -2807,17 +2851,84 @@ function wikiFullExtract(title){
 }
 // Достопримечательности рядом (геопоиск Википедии) с фото и описанием
 function wikiNearby(lat,lon,exclude){
-  return fetch('https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord='+lat+'%7C'+lon+'&ggsradius=10000&ggslimit=14&prop=pageimages%7Cextracts&exintro=1&explaintext=1&exsentences=1&piprop=thumbnail&pithumbsize=280')
+  // prop=coordinates — координаты каждого места, нужны для группировки по близости в плане поездки
+  return fetch('https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord='+lat+'%7C'+lon+'&ggsradius=10000&ggslimit=14&prop=coordinates%7Cpageimages%7Cextracts&exintro=1&explaintext=1&exsentences=1&piprop=thumbnail&pithumbsize=280')
     .then(function(r){return r.ok?r.json():null})
     .then(function(d){
       if(!d||!d.query||!d.query.pages)return [];
       var arr=Object.keys(d.query.pages).map(function(k){return d.query.pages[k]});
       arr.sort(function(a,b){return (a.index||99)-(b.index||99)});
-      return arr.filter(function(p){return p.title&&p.title!==exclude&&!/^(Список|Категория|Улица|Проспект)/.test(p.title)})
-        .map(function(p){return {n:p.title,d:(p.extract||'').replace(/\s+/g,' ').trim().slice(0,100),img:(p.thumbnail&&p.thumbnail.source)||''}})
+      var list=arr.filter(function(p){return p.title&&p.title!==exclude&&!/^(Список|Категория|Улица|Проспект)/.test(p.title)})
+        .map(function(p){
+          var c=(p.coordinates&&p.coordinates[0])||null;
+          return {n:p.title,d:(p.extract||'').replace(/\s+/g,' ').trim().slice(0,100),img:(p.thumbnail&&p.thumbnail.source)||'',
+            lat:c?c.lat:null,lon:c?c.lon:null};
+        })
         .filter(function(p){return p.img})
-        .slice(0,6);
+        .slice(0,8);
+      return nearestNeighborOrder(list);
     }).catch(function(){return []});
+}
+// Реальные соседние города/курорты в радиусе ~50 км + честное расстояние и время на
+// машине через OSRM (открытый роутинг-движок, те же данные, что используют настоящие
+// карты) — вместо выдуманного «где-то рядом» даём проверяемые цифры со ссылкой на карту
+var SETTLEMENT_HINT=/город|посёлок|поселение|курорт|деревн|коммун|муниципалит|остров(?!ов)|town|city|village|resort|municipality|island(?!s of the)/i;
+function wikiNearbySettlements(lat,lon,exclude){
+  return fetch('https://ru.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=geosearch&ggscoord='+lat+'%7C'+lon+'&ggsradius=50000&ggslimit=20&prop=coordinates%7Cextracts&exintro=1&explaintext=1&exsentences=2')
+    .then(function(r){return r.ok?r.json():null})
+    .then(function(d){
+      if(!d||!d.query||!d.query.pages)return [];
+      var arr=Object.keys(d.query.pages).map(function(k){return d.query.pages[k]});
+      arr.sort(function(a,b){return (a.index||99)-(b.index||99)});
+      return arr.filter(function(p){
+          return p.title&&p.title!==exclude&&p.coordinates&&p.coordinates[0]&&
+            SETTLEMENT_HINT.test((p.extract||'')+' '+p.title)&&
+            !/^(Список|Категория)/.test(p.title);
+        })
+        .map(function(p){var c=p.coordinates[0];return {n:p.title,lat:c.lat,lon:c.lon}})
+        .slice(0,4);
+    }).catch(function(){return []});
+}
+// OSRM — бесплатный публичный роутинг-сервис, реальные дороги, не «по прямой»
+function osrmDrive(from,to){
+  var url='https://router.project-osrm.org/route/v1/driving/'+from[1]+','+from[0]+';'+to[1]+','+to[0]+'?overview=false';
+  return fetch(url).then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d||d.code!=='Ok'||!d.routes||!d.routes[0])return null;
+    var r=d.routes[0];
+    return {km:Math.round(r.distance/1000),min:Math.round(r.duration/60)};
+  }).catch(function(){return null});
+}
+// Для 1-2 ближайших реальных поселений считаем честное время на машине.
+// Если OSRM недоступен/долго думает — просто не показываем блок, не выдумываем цифры.
+function nearbyDriveOptions(origin,settlements){
+  var picks=settlements.slice(0,2);
+  if(!picks.length)return Promise.resolve([]);
+  return Promise.all(picks.map(function(s){
+    return withTimeout(osrmDrive(origin,[s.lat,s.lon]),4000,null).then(function(route){
+      if(!route)return null;
+      return {name:s.n,km:route.km,min:route.min,
+        mapUrl:'https://www.google.com/maps/dir/?api=1&origin='+origin[0]+','+origin[1]+'&destination='+s.lat+','+s.lon};
+    });
+  })).then(function(res){return res.filter(function(x){return x})});
+}
+// Переупорядочивает места жадным методом «ближайший сосед», чтобы соседние по порядку
+// точки оказывались рядом географически — тогда places, попавшие в один день плана,
+// не разбросаны по всему городу (см. JTBD: «маршрут с учётом географической близости»)
+function nearestNeighborOrder(list){
+  var withCoord=list.filter(function(p){return p.lat!=null&&p.lon!=null});
+  var noCoord=list.filter(function(p){return p.lat==null||p.lon==null});
+  if(withCoord.length<2)return list;
+  var ordered=[withCoord.shift()],cur=ordered[0];
+  while(withCoord.length){
+    var bestI=0,bestD=Infinity;
+    for(var i=0;i<withCoord.length;i++){
+      var dist=haversine([cur.lat,cur.lon],[withCoord[i].lat,withCoord[i].lon]);
+      if(dist<bestD){bestD=dist;bestI=i}
+    }
+    cur=withCoord.splice(bestI,1)[0];
+    ordered.push(cur);
+  }
+  return ordered.concat(noCoord);
 }
 var CITY_TIPS=[
   {i:'🚶',t:'Прогуляться по историческому центру и набережной',c:'tours'},
@@ -3368,7 +3479,7 @@ function inviteToTrip(){
 }
 
 // ── Брони, билеты и файлы ──
-var ITEM_ICONS={flight:'✈️',train:'🚂',hotel:'🏨',excursion:'🎫',note:'📝',photo:'🖼',video:'🎬',file:'📎'};
+var ITEM_ICONS={flight:'✈️',train:'🚂',hotel:'🏨',excursion:'🎫',note:'📝',photo:'🖼',video:'🎬',file:'📎',plan:'🗺'};
 var TRIP_BUCKET='trip-files';
 function loadItems(id){
   sb.from('trip_items').select('*').eq('trip_id',id).order('created_at',{ascending:true}).then(function(res){
@@ -3399,8 +3510,9 @@ function renderItems(items,urls){
       else media='<span style="color:var(--t3);font-size:10px">файл (нет доступа)</span>';
     }
     var link=it.file_url?'<a href="'+it.file_url+'" target="_blank" rel="noopener">открыть ссылку</a>':'';
+    var details=it.details?'<div class="ti-details">'+escapeHtml(it.details)+'</div>':'';
     return '<div class="tv-item"><div class="ti-ico">'+(ITEM_ICONS[it.type]||'📌')+'</div>'+
-      '<div class="tv-item-body"><div class="tv-item-title">'+escapeHtml(it.title||'—')+'</div>'+link+media+'</div>'+
+      '<div class="tv-item-body"><div class="tv-item-title">'+escapeHtml(it.title||'—')+'</div>'+link+media+details+'</div>'+
       '<button class="tv-item-del" onclick="delTripItem(\''+it.id+'\',\''+(it.file_path||'')+'\')" aria-label="Удалить"><i class="fas fa-trash"></i></button></div>';
   }).join('');
 }
@@ -4263,6 +4375,18 @@ function geoLookup(q){
     })
     .catch(function(){return null});
 }
+// «Приёмник ссылок» — пока без автоматического парсинга (это ручной Wizard-of-Oz
+// тест гипотезы), но выглядит и ощущается как реальный ввод: открывает Telegram
+// с уже готовым текстом, ничего копировать вручную не нужно
+function plSendReel(){
+  var inp=document.getElementById('pl-reel-link');
+  var link=(inp.value||'').trim();
+  if(!link){showToast('Вставьте ссылку на рилс или скриншот сначала');inp.focus();return}
+  var msg='Привет! Хочу маршрут по местам из этого рилса: '+link;
+  window.open('https://t.me/markizy_travel?text='+encodeURIComponent(msg),'_blank','noopener');
+  inp.value='';
+  showToast('✅ Открыли Telegram с готовым сообщением');
+}
 function plGenerate(fixNote){
   var city=(document.getElementById('pl-city').value||'').trim();
   if(!city){showToast('Укажите, куда едете');document.getElementById('pl-city').focus();return}
@@ -4271,6 +4395,7 @@ function plGenerate(fixNote){
     withWhom:document.getElementById('pl-with').value,
     people:parseInt(document.getElementById('pl-people').value)||1,
     days:Math.max(1,Math.min(21,parseInt(document.getElementById('pl-days').value)||3)),
+    startDate:(document.getElementById('pl-start').value||'')||null,
     interests:plInterests.slice(),
     notes:((document.getElementById('pl-notes').value||'').trim()+(fixNote?(' Правка: '+fixNote):'')).trim()
   };
@@ -4286,27 +4411,64 @@ function plGenerate(fixNote){
   var si=0;var timer=setInterval(function(){var e=document.getElementById('pl-status');if(e)e.textContent=PL_STATUSES[si%PL_STATUSES.length];si++},950);
   // 1) Находим место на карте мира (любой город/остров/курорт/страна)
   // 2) Берём описание из Википедии 3) Собираем места рядом 4) Строим план
-  var info={extract:'',geo:null},done=false,started=Date.now();
-  // План строится ВСЕГДА: даже если интернет-сервисы молчат или тормозят
+  var info={extract:'',geo:null,drive:[]},done=false,started=Date.now();
+  // План строится ВСЕГДА: даже если интернет-сервисы молчат или тормозят,
+  // или если настоящий ИИ-план недоступен (бесплатный тариф, нет ключа, ошибка сети) —
+  // тогда тихо откатываемся на шаблонный buildPlan()
+  function buildFallback(nearby){
+    try{
+      plLastPlan=buildPlan(o,nearby||[],info.extract,info.geo,info.drive);
+      renderPlan(plLastPlan);
+    }catch(err){
+      document.getElementById('pl-result').innerHTML=
+        '<div class="pl-thinking"><div class="pl-think-status">Не удалось собрать план</div>'+
+        '<div class="pl-think-sub">Попробуйте ещё раз или измените запрос</div>'+
+        '<button class="pl-go" style="margin-top:14px;max-width:240px;margin-left:auto;margin-right:auto" onclick="plGenerate()">Повторить</button></div>';
+    }
+  }
+  function assembleAiPlan(ai,nearby){
+    var ru=encodeURIComponent(o.city);
+    var stayLink=plRef('https://www.booking.com/searchresults.ru.html?ss='+ru+'&lang=ru&sb=1','Отели');
+    var days=(ai.days||[]).map(function(d){
+      return {n:d.n,title:d.title,date:d.date,items:(d.items||[]).map(function(it){
+        return {w:it.w,t:it.t,link:plRef('https://www.google.com/maps/search/'+encodeURIComponent(it.t+' '+o.city),'На карте')};
+      })};
+    });
+    return {city:o.city,country:o.country||'',days:days,intro:ai.intro||'',opts:o,
+      type:destType(o.city,info.extract,info.geo),typeLabel:ai.typeLabel||'',
+      stay:{text:ai.stayText||'',link:stayLink},drive:info.drive||[],source:'ai'};
+  }
+  function tryAiPlan(nearby){
+    // ИИ-план — только для платных тарифов (проверяется и здесь, и на сервере)
+    // и только если вход выполнен (иначе Edge Function просто ответит unauthorized)
+    if(!sb||!curUser||getTier()==='free'){buildFallback(nearby);return}
+    var payload={
+      city:o.city,country:o.country,days:o.days,people:o.people,withWhom:o.withWhom,
+      budget:o.budget,budgetSum:o.budgetSum,interests:o.interests,notes:o.notes,startDate:o.startDate,
+      nearbySettlements:(info.drive||[]).map(function(d){return {name:d.name,km:d.km,min:d.min}})
+    };
+    withTimeout(sb.functions.invoke('generate-plan',{body:payload}),20000,null).then(function(res){
+      if(res&&!res.error&&res.data&&res.data.plan){
+        plLastPlan=assembleAiPlan(res.data.plan,nearby);
+        renderPlan(plLastPlan);
+      }else{
+        buildFallback(nearby);
+      }
+    }).catch(function(){buildFallback(nearby)});
+  }
   function finish(nearby){
     if(done)return;done=true;
     clearTimeout(hardStop);
     var wait=Math.max(0,2600-(Date.now()-started));   // немного «подумать», но не больше
     setTimeout(function(){
       clearInterval(timer);
-      try{
-        plLastPlan=buildPlan(o,nearby||[],info.extract,info.geo);
-        renderPlan(plLastPlan);
-      }catch(err){
-        document.getElementById('pl-result').innerHTML=
-          '<div class="pl-thinking"><div class="pl-think-status">Не удалось собрать план</div>'+
-          '<div class="pl-think-sub">Попробуйте ещё раз или измените запрос</div>'+
-          '<button class="pl-go" style="margin-top:14px;max-width:240px;margin-left:auto;margin-right:auto" onclick="plGenerate()">Повторить</button></div>';
-      }
+      tryAiPlan(nearby||[]);
     },wait);
   }
-  // Страховка: если сервисы висят — через 9 сек строим план по тому, что есть
-  var hardStop=setTimeout(function(){finish([])},9000);
+  // Страховка: если сервисы висят — через 11 сек строим план по тому, что есть
+  // (чуть больше, чем раньше, — теперь ещё запрашиваем реальные расстояния через OSRM)
+  var hardStop=setTimeout(function(){finish([])},11000);
+  var mainCoord=null;
   withTimeout(geoLookup(city),5000,null).then(function(g){
     info.geo=g;
     if(g&&g.name&&g.name!==city)o.city=g.name;          // уточнённое название
@@ -4315,9 +4477,22 @@ function plGenerate(fixNote){
   }).then(function(cw){
     info.extract=(cw&&cw.extract)||'';
     var coord=(info.geo&&info.geo.coord)||(cw&&cw.coord)||CITY_COORDS[o.city]||null;
-    return coord?withTimeout(wikiNearby(coord[0],coord[1],o.city),5000,[]):Promise.resolve([]);
-  }).then(function(nearby){finish(nearby||[])})
-    .catch(function(){finish([])});
+    mainCoord=coord;
+    if(!coord)return [];
+    return withTimeout(wikiNearby(coord[0],coord[1],o.city),5000,[]);
+  }).then(function(nearby){
+    // Реальные соседние города + честное время на машине через OSRM — только для
+    // направлений, где это реально полезно (пляж/природа); не тратим время зря на «город»
+    if(mainCoord&&(destType(o.city,info.extract,info.geo)==='beach'||destType(o.city,info.extract,info.geo)==='nature')){
+      withTimeout(wikiNearbySettlements(mainCoord[0],mainCoord[1],o.city),5000,[]).then(function(settlements){
+        withTimeout(nearbyDriveOptions(mainCoord,settlements),9000,[]).then(function(drive){
+          info.drive=drive||[];finish(nearby||[]);
+        });
+      });
+    }else{
+      finish(nearby||[]);
+    }
+  }).catch(function(){finish([])});
 }
 // Промис с таймаутом: не даём внешним сервисам подвесить интерфейс
 function withTimeout(p,ms,fallback){
@@ -4351,7 +4526,7 @@ function destType(city,extract,geo){
   return 'city';
 }
 function plRef(url,label){return {url:url,label:label||'Посмотреть'}}
-function buildPlan(o,nearby,extract,geo){
+function buildPlan(o,nearby,extract,geo,drive){
   var city=o.city,ru=encodeURIComponent(city);
   var type=destType(city,extract,geo);
   var places=nearby.map(function(p){return p.n}),pIdx=0;
@@ -4387,8 +4562,15 @@ function buildPlan(o,nearby,extract,geo){
     stayLink=lYaHotels;
   }
   var days=[];
+  var WD=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  var startD=o.startDate?new Date(o.startDate+'T00:00:00'):null;
   for(var d=1;d<=o.days;d++){
     var items=[],title;
+    var dateLabel=null;
+    if(startD){
+      var dd=new Date(startD.getTime()+(d-1)*86400000);
+      dateLabel=('0'+dd.getDate()).slice(-2)+'.'+('0'+(dd.getMonth()+1)).slice(-2)+', '+WD[dd.getDay()];
+    }
     if(d===1){
       title=type==='beach'?'Прилёт и заселение':'Прибытие и знакомство';
       if(type==='beach'){
@@ -4456,7 +4638,7 @@ function buildPlan(o,nearby,extract,geo){
       items.push({w:'День',t:(p2?'Посещаем «'+p2+'», ':'Достопримечательности, ')+'обед в кафе рядом',link:lMapAtt});
       items.push({w:'Вечер',t:has('релакс')&&d%3===0?'СПА / баня — расслабляемся':'Ужин в ресторане под ваш бюджет',link:has('релакс')&&d%3===0?lSpa:lFood});
     }
-    days.push({n:d,title:title,items:items});
+    days.push({n:d,title:title,items:items,date:dateLabel});
   }
   var budgetTxt=o.budgetSum?(o.budgetSum.toLocaleString('ru-RU')+' ₽ (≈ '+o.budget+', ~'+Math.round(o.budgetSum/o.people/o.days).toLocaleString('ru-RU')+' ₽/чел в день)'):o.budget;
   var withText={'один':'соло-поездки','пара':'романтической поездки вдвоём','семья':'семейного отдыха с детьми','друзья':'поездки с друзьями','компания':'отдыха большой компанией'}[o.withWhom]||'поездки';
@@ -4469,7 +4651,8 @@ function buildPlan(o,nearby,extract,geo){
   var typeLabel={beach:'🏝 Пляж / острова',mount:'⛰ Горы',nature:'🌲 Природа',city:'🏙 Город'}[type];
   return {city:city,days:days,intro:intro,opts:o,type:type,typeLabel:typeLabel,
           country:(geo&&geo.country)||o.country||'',
-          stay:{text:stayText,link:stayLink},links:[stayLink,lTripster,lFood,lAvia]};
+          stay:{text:stayText,link:stayLink},links:[stayLink,lTripster,lFood,lAvia],
+          drive:drive||[],source:'template'};
 }
 function renderPlan(plan){
   var res=document.getElementById('pl-result');
@@ -4477,13 +4660,23 @@ function renderPlan(plan){
     '<div class="pl-plan-meta">'+(plan.country?escapeHtml(plan.country)+' · ':'')+(plan.typeLabel?escapeHtml(plan.typeLabel)+' · ':'')+
     plan.days.length+' дн. · '+plan.opts.people+' чел.</div></div>';
   h+='<div class="pl-plan-intro">'+escapeHtml(plan.intro)+'</div>';
+  if(plan.opts.budgetSum)h+='<div class="pl-fx-hint" id="pl-fx-hint">Считаем бюджет в валюте…</div>';
   if(plan.stay){
     h+='<div class="pl-stay"><div class="pl-stay-t"><i class="fas fa-bed"></i> Где жить</div>'+
        '<div class="pl-stay-d">'+escapeHtml(plan.stay.text)+'</div>'+
        '<a class="pl-link" href="'+plan.stay.link.url+'" target="_blank" rel="noopener">Подобрать отель <i class="fas fa-arrow-up-right-from-square"></i></a></div>';
   }
+  if(plan.drive&&plan.drive.length){
+    h+='<div class="pl-stay"><div class="pl-stay-t"><i class="fas fa-car"></i> Рядом на машине — реальное время в пути</div>'+
+      plan.drive.map(function(d){
+        return '<div class="pl-drive-row"><b>'+escapeHtml(d.name)+'</b> — '+d.km+' км, ≈'+d.min+' мин'+
+          ' <a class="pl-link sm" href="'+d.mapUrl+'" target="_blank" rel="noopener">маршрут <i class="fas fa-arrow-up-right-from-square"></i></a></div>';
+      }).join('')+
+      '<div class="pl-drive-note">Расстояние и время — из открытого роутинг-сервиса (реальные дороги), может отличаться от пробок в моменте.</div></div>';
+  }
   plan.days.forEach(function(day){
-    h+='<div class="pl-day"><div class="pl-day-h"><div class="pl-day-num">'+day.n+'</div><div class="pl-day-t">'+escapeHtml(day.title)+'</div></div><div class="pl-day-items">';
+    h+='<div class="pl-day"><div class="pl-day-h"><div class="pl-day-num">'+day.n+'</div><div class="pl-day-t">'+
+      (day.date?'<span class="pl-day-date">'+escapeHtml(day.date)+'</span> · ':'')+escapeHtml(day.title)+'</div></div><div class="pl-day-items">';
     day.items.forEach(function(it){
       h+='<div class="pl-item"><span class="pl-when">'+escapeHtml(it.w)+'</span><span>'+escapeHtml(it.t)+
         (it.link?' <a class="pl-link sm" href="'+it.link.url+'" target="_blank" rel="noopener">'+escapeHtml(it.link.label)+' <i class="fas fa-arrow-up-right-from-square"></i></a>':'')+
@@ -4494,6 +4687,7 @@ function renderPlan(plan){
   h+='<div class="pl-actions">'+
     '<button class="pl-act primary" onclick="plSave()"><i class="fas fa-heart"></i> Нравится</button>'+
     '<button class="pl-act" onclick="plShowFix()"><i class="fas fa-pen"></i> Исправить</button>'+
+    '<button class="pl-act" onclick="plAttachToTrip()"><i class="fas fa-suitcase-rolling"></i> В поездку</button>'+
     '<button class="pl-act" onclick="plShare()"><i class="fas fa-share"></i> Поделиться</button></div>';
   h+='<div class="pl-fix" id="pl-fix"><label style="font-size:12px;font-weight:600;color:var(--t1)">Что изменить?</label>'+
     '<div class="pl-notes-wrap" style="margin-top:7px"><textarea id="pl-fix-text" class="fc" rows="2" placeholder="Напр.: больше свободного времени, добавить рыбалку, меньше музеев…"></textarea>'+
@@ -4502,6 +4696,25 @@ function renderPlan(plan){
   h+='</div>';
   res.innerHTML=h;
   var pp=res.querySelector('.pl-plan');if(pp)pp.scrollIntoView({behavior:'smooth',block:'start'});
+  if(plan.opts.budgetSum)renderPlanFx(plan.opts.budgetSum);
+}
+// Бюджет плана в валюте — переиспользует курсы из виджета «Валюта» (fxRates),
+// а не заводит отдельный запрос: JTBD «удержать расходы в незнакомой валюте»
+function renderPlanFx(budgetRub){
+  var el=document.getElementById('pl-fx-hint');if(!el)return;
+  if(fxRates){
+    var usd=budgetRub/fxRates.RUB, eur=usd*fxRates.EUR;
+    el.innerHTML='<i class="fas fa-coins"></i> Бюджет ≈ $'+usd.toLocaleString('ru-RU',{maximumFractionDigits:0})+
+      ' · €'+eur.toLocaleString('ru-RU',{maximumFractionDigits:0})+' по текущему курсу';
+    return;
+  }
+  fxFetch();
+  // fxFetch асинхронный — как только курсы придут, обновим именно этот хинт
+  var tries=0,timer=setInterval(function(){
+    tries++;
+    if(fxRates){clearInterval(timer);renderPlanFx(budgetRub);}
+    else if(tries>15){clearInterval(timer);if(el)el.textContent='Курс валют сейчас недоступен';}
+  },400);
 }
 function plShowFix(){var f=document.getElementById('pl-fix');if(f)f.classList.toggle('show')}
 function plApplyFix(){var t=(document.getElementById('pl-fix-text').value||'').trim();plGenerate(t)}
@@ -4511,6 +4724,39 @@ function planText(plan){
   s+='Составлено в «Маршрут Построен»';return s;
 }
 function plShare(){if(plLastPlan)copyText(planText(plLastPlan),'📋 План скопирован — отправьте попутчикам')}
+// Прикрепить план к совместной поездке — попутчики видят его прямо внутри общей
+// поездки (в разделе «Брони и билеты»), а не как текст, скопированный в чужой чат
+function plAttachToTrip(){
+  if(!plLastPlan)return;
+  if(!requireAuth('Войдите, чтобы прикрепить план к поездке'))return;
+  var list=document.getElementById('attach-list');
+  list.innerHTML='<div class="chat-empty">Загрузка ваших поездок…</div>';
+  document.getElementById('attach-m').classList.add('open');
+  sb.from('trips').select('id,title,city').order('created_at',{ascending:false}).then(function(res){
+    var trips=(res&&res.data)||[];
+    if(!trips.length){
+      list.innerHTML='<div class="chat-empty">У вас пока нет совместных поездок.</div>'+
+        '<button class="go-btn" style="margin-top:12px" onclick="closeAttach();P(\'cabinet\')">Создать поездку</button>';
+      return;
+    }
+    list.innerHTML='<div class="trip-cards" style="margin-top:14px">'+trips.map(function(t){
+      return '<div class="trip-card" style="cursor:pointer" onclick="plDoAttach(\''+t.id+'\')">'+
+        '<div class="trip-card-body"><div class="tc-city">'+escapeHtml(t.title||t.city||'Поездка')+'</div>'+
+        (t.city?'<div class="tc-dates">'+escapeHtml(t.city)+'</div>':'')+'</div></div>';
+    }).join('')+'</div>';
+  },function(){list.innerHTML='<div class="chat-empty">Не удалось загрузить поездки</div>'});
+}
+function plDoAttach(tripId){
+  if(!plLastPlan)return;
+  var title='ИИ-план: '+plLastPlan.city+' ('+plLastPlan.days.length+' дн.)';
+  sb.from('trip_items').insert({trip_id:tripId,type:'plan',title:title,details:planText(plLastPlan),created_by:curUser.id})
+    .then(function(res){
+      if(res.error){showToast('❌ '+sbErr(res.error.message));return}
+      closeAttach();
+      showToast('✅ План прикреплён к поездке — виден всем участникам');
+    },function(){showToast('❌ Не удалось прикрепить план')});
+}
+function closeAttach(){document.getElementById('attach-m').classList.remove('open')}
 function plSave(){
   if(!plLastPlan)return;
   var plans=JSON.parse(localStorage.getItem('mz_plans')||'[]');

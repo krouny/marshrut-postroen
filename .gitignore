@@ -14,3 +14,12 @@ desktop.ini
 _*.html
 _*.js
 _*.png
+
+# Бизнес-контекст — не публикуем на GitHub
+.business/
+
+# Личные скриншоты пользователей и результаты их обработки — не код, не публикуем
+tools/screenshots/*
+!tools/screenshots/.gitkeep
+tools/places.json
+tools/places_report.txt
